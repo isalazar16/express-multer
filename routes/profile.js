@@ -14,7 +14,8 @@ const storage = multer.diskStorage({
     }
 })
 const filter = function fileFilter(req, file, cb) {
-    if (file.mimetype.split('/')[1] !== 'png') {
+    // console.log(file.mimetype.split('/')[1])
+    if (file.mimetype.split('/')[1] !== 'jpg' && file.mimetype.split('/')[1] !== 'png') {
         cb(null, false)
     } else {
         cb(null, true)
@@ -34,7 +35,11 @@ router.get('/', function (req, res, next) {
 router.post('/', upload.single('avatar'), function (req, res, next) {
     console.log(req.file)
     // req.body will hold the text fields, if there were any
-    res.send("Jasota")
+    if (req.file) {
+        res.send(`Zure izena: ${req.body.izena} Fitxategia: http://localhost:3000/uploads/${req.file.filename} `)
+    } else {
+        res.send("File not uploaded")
+    }
 })
 
 
