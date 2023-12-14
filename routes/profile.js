@@ -34,9 +34,10 @@ router.get('/', function (req, res, next) {
 
 router.post('/', upload.single('avatar'), function (req, res, next) {
     console.log(req.file)
-    // req.body will hold the text fields, if there were any
+    const protocol = req.protocol
+    const host = req.get('host')
     if (req.file) {
-        res.send(`Zure izena: ${req.body.izena} Fitxategia: http://localhost:3000/uploads/${req.file.filename} `)
+        res.send(`Zure izena: ${req.body.izena} Fitxategia: ${protocol}://${host}/uploads/${req.file.filename} `)
     } else {
         res.send("File not uploaded")
     }
